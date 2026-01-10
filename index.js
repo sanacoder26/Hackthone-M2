@@ -102,7 +102,7 @@ import supabase from './config.js';
 const blogsContainer = document.getElementById('blogsContainer');
 const authMenu = document.getElementById('authMenu');
 
-// ── Auth & Navigation ───────────────────────────────────────────────
+// ── Auth & Navigation 
 async function checkAuthAndUpdateNav() {
     // Safety check - element exists?
     if (!authMenu) {
@@ -156,7 +156,7 @@ async function checkAuthAndUpdateNav() {
     }
 }
 
-// ── Load Blogs ──────────────────────────────────────────────────────
+// ── Load Blogs 
 async function loadBlogs() {
     if (!blogsContainer) {
         console.warn("blogsContainer element not found");
@@ -234,7 +234,7 @@ async function loadBlogs() {
     });
 }
 
-// ── Start the app ───────────────────────────────────────────────────
+// ── Start the app
 async function init() {
     await checkAuthAndUpdateNav();
     await loadBlogs();
@@ -243,3 +243,13 @@ async function init() {
 init().catch(err => {
     console.error("Initialization failed:", err);
 });
+
+// show destop 
+await supabase
+  .from('blogs')
+  .insert({
+    title,
+    content,
+    image_url,
+    user_id: (await supabase.auth.getUser()).data.user?.id
+  })
