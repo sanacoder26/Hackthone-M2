@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create New Post - My Blog</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    body {
+      background: #f8f9fa;
+      min-height: 100vh;
+    }
+    .form-container {
+      max-width: 900px;
+      margin: 40px auto;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-bottom: none;
+      padding: 1.5rem;
+    }
+    .preview-img {
+      max-height: 320px;
+      object-fit: cover;
+      width: 100%;
+      border-radius: 8px;
+      display: none;
+      margin-top: 1rem;
+    }
+    .btn-upload {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-upload input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar (same as your other pages) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">My Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" id="authMenu">
+          <!-- Will be filled by JS -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container form-container">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4 class="mb-0"><i class="fas fa-pen-nib me-2"></i> Create New Post</h4>
+      </div>
+      
+      <div class="card-body p-4 p-md-5">
+        <form id="createPostForm">
+          <div class="mb-4">
+            <label for="title" class="form-label fw-bold">Post Title <span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-lg" id="title" 
+                   placeholder="Write a catchy title..." required>
+          </div>
+
+          <div class="mb-4">
+            <label for="content" class="form-label fw-bold">Content <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="content" rows="12" 
+                      placeholder="Write your amazing blog post here..." required></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">Cover Image</label>
+            <div class="d-flex gap-3 align-items-center">
+              <button type="button" class="btn btn-outline-primary btn-upload position-relative">
+                <i class="fas fa-cloud-upload-alt me-2"></i> Choose Image
+                <input type="file" id="imageInput" accept="image/*">
+              </button>
+              <small class="text-muted">Recommended: 1200×630px (JPG/PNG)</small>
+            </div>
+            <img id="imagePreview" class="preview-img" alt="Preview">
+            <input type="hidden" id="imageUrl">
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+            <button type="button" class="btn btn-outline-secondary btn-lg px-5" onclick="window.history.back()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary btn-lg px-5" id="publishBtn">
+              <i class="fas fa-paper-plane me-2"></i> Publish Post
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
