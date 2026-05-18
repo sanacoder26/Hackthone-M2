@@ -1,10 +1,37 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.28.0';
 
-const supabaseUrl = 'https://yuzxkvytvrddnmjmgruy.supabase.co'
-const supabaseKey = 'sb_publishable_JBsEL2knsHDwhNyYct_osA_WnrTSDrK'
+// Default fallback credentials (from original config.js)
+let supabaseUrl = 'https://yuzxkvytvrddnmjmgruy.supabase.co';
+let supabaseKey = 'sb_publishable_JBsEL2knsHDwhNyYct_osA_WnrTSDrK';
 
+// Dynamically fetch .env file if running on a local development server
+try {
+  const response = await fetch('./.env');
+  if (response.ok) {
+    const text = await response.text();
+    const lines = text.split('\n');
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const parts = trimmed.split('=');
+        if (parts.length >= 2) {
+          const key = parts[0].trim();
+          let val = parts.slice(1).join('=').trim();
+          // Remove wrapping quotes if they exist
+          if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+            val = val.substring(1, val.length - 1);
+          }
+          if (key === 'NEXT_PUBLIC_SUPABASE_URL' || key === 'SUPABASE_URL') supabaseUrl = val;
+          if (key === 'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY' || key === 'SUPABASE_KEY') supabaseKey = val;
+        }
+      }
+    });
+  }
+} catch (e) {
+  console.log('Using default Supabase credentials (file system or .env fetch blocked/unsupported)', e);
+}
 
-const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = createClient(supabaseUrl, supabaseKey);
+export default supabase;
 
-export default supabase

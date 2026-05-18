@@ -3,113 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create New Post - My Blog</title>
+  <title>Write New Story - BlogSphere</title>
   
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome for icons -->
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      --dark-bg: #0f172a;
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+      --hover-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+
     body {
-      background: #f8f9fa;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .form-container {
-      max-width: 900px;
+
+    /* Navbar Glassmorphism */
+    .navbar-premium {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand-premium {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link-premium {
+      font-weight: 600;
+      color: #475569 !important;
+      padding: 0.5rem 1.25rem !important;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-premium:hover, .nav-link-premium.active {
+      color: #4f46e5 !important;
+      background-color: rgba(79, 70, 229, 0.08);
+    }
+
+    /* Creation Workspace Panel */
+    .form-container-premium {
+      max-width: 860px;
       margin: 40px auto;
+      width: 100%;
     }
-    .card {
+
+    .card-workspace {
       border: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      border-radius: 24px;
       overflow: hidden;
+      background-color: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
-    .card-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    .card-header-workspace {
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
       color: white;
-      border-bottom: none;
-      padding: 1.5rem;
+      border-bottom: 4px solid #4f46e5;
+      padding: 2.25rem;
     }
+
+    .card-header-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: -0.5px;
+    }
+
     .preview-img {
-      max-height: 320px;
+      max-height: 350px;
       object-fit: cover;
       width: 100%;
-      border-radius: 8px;
+      border-radius: 16px;
       display: none;
       margin-top: 1rem;
+      border: 1px solid #e2e8f0;
     }
-    .btn-upload {
-      position: relative;
-      overflow: hidden;
+
+    .btn-premium {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      transition: all 0.2s ease;
     }
-    .btn-upload input[type="file"] {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+      color: white;
+    }
+
+    .btn-premium-outline {
+      background: transparent;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-premium-outline:hover {
+      background: rgba(79, 70, 229, 0.05);
+      border-color: #7c3aed;
+      color: #7c3aed;
+    }
+
+    .form-control-premium {
+      border: 2px solid #f1f5f9;
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-control-premium:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    }
+
+    .dark-swal-popup {
+      border-radius: 20px !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    .footer-premium {
+      margin-top: auto;
+      background-color: #0f172a;
+      color: #94a3b8;
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar (same as your other pages) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Premium Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-premium">
     <div class="container">
-      <a class="navbar-brand" href="index.html">My Blog</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand navbar-brand-premium" href="index.html">
+        <i class="fas fa-feather-alt me-2"></i>BlogSphere
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto" id="authMenu">
-          <!-- Will be filled by JS -->
+        <ul class="navbar-nav ms-auto align-items-center gap-2 mt-3 mt-lg-0" id="authMenu">
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="index.html">Home Feed</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="profile.html">My Studio</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container form-container">
-    <div class="card">
-      <div class="card-header text-center">
-        <h4 class="mb-0"><i class="fas fa-pen-nib me-2"></i> Create New Post</h4>
+  <div class="container form-container-premium">
+    <div class="card card-workspace">
+      <div class="card-header-workspace text-center">
+        <h4 class="mb-0 card-header-title"><i class="fas fa-feather-alt me-2 text-indigo"></i>Create New Story</h4>
+        <p class="small text-muted mb-0 mt-2 text-light-50" style="color: #a5b4fc;">Draft and publish your article to the public feed instantly.</p>
       </div>
       
       <div class="card-body p-4 p-md-5">
         <form id="createPostForm">
           <div class="mb-4">
             <label for="title" class="form-label fw-bold">Post Title <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-lg" id="title" 
-                   placeholder="Write a catchy title..." required>
+            <input type="text" class="form-control form-control-premium form-control-lg" id="title" 
+                   placeholder="Give your story a brilliant title..." required>
           </div>
 
           <div class="mb-4">
-            <label for="content" class="form-label fw-bold">Content <span class="text-danger">*</span></label>
-            <textarea class="form-control" id="content" rows="12" 
-                      placeholder="Write your amazing blog post here..." required></textarea>
+            <label for="content" class="form-label fw-bold">Story Body <span class="text-danger">*</span></label>
+            <textarea class="form-control form-control-premium" id="content" rows="12" 
+                      placeholder="Write your amazing thoughts here..." required></textarea>
           </div>
 
           <div class="mb-4">
-            <label class="form-label fw-bold">Cover Image</label>
-            <div class="d-flex gap-3 align-items-center">
-              <button type="button" class="btn btn-outline-primary btn-upload position-relative">
+            <label class="form-label fw-bold">Cover Image (Optional)</label>
+            <div class="d-flex gap-3 align-items-center mb-3">
+              <button type="button" class="btn btn-outline-secondary position-relative overflow-hidden" style="border-radius: 9999px;">
                 <i class="fas fa-cloud-upload-alt me-2"></i> Choose Image
-                <input type="file" id="imageInput" accept="image/*">
+                <input type="file" id="imageInput" accept="image/*" style="position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;">
               </button>
-              <small class="text-muted">Recommended: 1200×630px (JPG/PNG)</small>
+              <small class="text-muted">Recommended: JPG/PNG high resolution</small>
             </div>
-            <img id="imagePreview" class="preview-img" alt="Preview">
-            <input type="hidden" id="imageUrl">
+            <img id="imagePreview" class="preview-img" alt="Uploaded Cover Preview">
           </div>
 
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-            <button type="button" class="btn btn-outline-secondary btn-lg px-5" onclick="window.history.back()">
+          <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-5 pt-3" style="border-top: 1px solid #f1f5f9;">
+            <button type="button" class="btn btn-premium-outline px-5" onclick="window.history.back()">
               Cancel
             </button>
-            <button type="submit" class="btn btn-primary btn-lg px-5" id="publishBtn">
-              <i class="fas fa-paper-plane me-2"></i> Publish Post
+            <button type="submit" class="btn btn-premium px-5" id="publishBtn">
+              <i class="fas fa-paper-plane me-2"></i> Publish Story
             </button>
           </div>
         </form>
@@ -117,8 +231,18 @@
     </div>
   </div>
 
- 
+  <!-- Premium Footer -->
+  <footer class="footer-premium text-center">
+    <div class="container">
+      <p class="small mb-0">&copy; 2026 BlogSphere. Author Writing Studio.</p>
+    </div>
+  </footer>
 
+  <!-- JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Module logic -->
+  <script type="module" src="creat.js"></script>
 </body>
 </html>

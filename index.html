@@ -3,48 +3,470 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BlogSphere - Discover Stories</title>
+  <title>BlogSphere - Discover, Write & Inspire</title>
+  
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
-    body { font-family: 'Poppins', sans-serif; background:#f8f9fa; }
-    .card-blog:hover { transform: translateY(-8px); transition: 0.3s; }
-    .blog-img { height: 200px; object-fit: cover; }
+    :root {
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      --dark-bg: #0f172a;
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+      --hover-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar Glassmorphism */
+    .navbar-premium {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand-premium {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link-premium {
+      font-weight: 600;
+      color: #475569 !important;
+      padding: 0.5rem 1.25rem !important;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-premium:hover, .nav-link-premium.active {
+      color: #4f46e5 !important;
+      background-color: rgba(79, 70, 229, 0.08);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+      padding: 5rem 0 3.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 3.25rem;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: #64748b;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    /* Blog Card Premium Design */
+    .card-blog-premium {
+      border: 1px solid rgba(241, 245, 249, 1);
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #ffffff;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .card-blog-premium:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .blog-img-container {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background-color: #f1f5f9;
+    }
+
+    .blog-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card-blog-premium:hover .blog-img {
+      transform: scale(1.05);
+    }
+
+    .blog-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      z-index: 2;
+    }
+
+    .blog-actions-overlay {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .btn-action-overlay {
+      background: white;
+      border: none;
+      color: #475569;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-action-overlay:hover {
+      background: #f8fafc;
+      transform: scale(1.1);
+    }
+
+    .btn-edit-overlay:hover {
+      color: #4f46e5;
+    }
+
+    .btn-delete-overlay:hover {
+      color: #ef4444;
+    }
+
+    .card-body-premium {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-title-link {
+      color: #0f172a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .blog-title-link:hover {
+      color: #4f46e5;
+    }
+
+    .blog-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card-text {
+      color: #64748b;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Author Profile Section in Card */
+    .author-meta {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 1rem;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #e2e8f0;
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .author-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #334155;
+    }
+
+    .blog-date {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    /* Styled Buttons */
+    .btn-premium {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      font-weight: 600;
+      padding: 0.6rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+      color: white;
+    }
+
+    .btn-premium-outline {
+      background: transparent;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-premium-outline:hover {
+      background: rgba(79, 70, 229, 0.05);
+      border-color: #7c3aed;
+      color: #7c3aed;
+    }
+
+    /* SweetAlert Premium styles overrides */
+    .dark-swal-popup {
+      border-radius: 20px !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    /* Footer styling */
+    .footer-premium {
+      margin-top: auto;
+      background-color: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-brand {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: white !important;
+    }
+
+    /* Custom Search Input */
+    .search-wrapper {
+      max-width: 500px;
+      margin: -1.5rem auto 3rem;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.5rem 1rem 3rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
   </style>
 </head>
 <body>
 
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- Premium Navbar -->
+<nav class="navbar navbar-expand-lg navbar-premium">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html">BlogSphere</a>
+    <a class="navbar-brand navbar-brand-premium" href="index.html">
+      <i class="fas fa-feather-alt me-2"></i>BlogSphere
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto" id="authMenu"></ul>
-    </div>
-  </div>
-</nav> -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">MyBlog</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"></button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link" href="signup.html" id="createLink">Register</a></li>
-        <li class="nav-item"><a class="nav-link" href="login.html" id="authLink">Login</a></li>
+      <ul class="navbar-nav ms-auto align-items-center gap-2 mt-3 mt-lg-0" id="authMenu">
+        <!-- Will be dynamically populated by JS -->
+        <li class="nav-item">
+          <div class="spinner-border spinner-border-sm text-secondary"></div>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- Hero Section -->
+<header class="hero-section">
+  <div class="container">
+    <h1 class="hero-title animate__animated animate__fadeInDown">Insights, Stories & Ideas</h1>
+    <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">
+      Welcome to BlogSphere. Discover fresh perspectives from creators around the globe, or express your unique thoughts by writing your own articles.
+    </p>
+    <div id="heroActions" class="d-flex justify-content-center gap-3">
+      <!-- Dynamic call to action depending on Auth -->
+    </div>
+  </div>
+</header>
 
-<div class="container py-5">
-  <h1 class="mb-5 text-center">Latest Stories</h1>
-  <div class="row g-4" id="blogsContainer"></div>
+<!-- Feed Main Content -->
+<main class="container py-5">
+  
+  <!-- Search bar -->
+  <div class="search-wrapper">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" id="searchInput" class="search-input" placeholder="Search stories, titles, or authors...">
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0">Trending Stories</h3>
+    <span class="badge bg-light text-dark px-3 py-2 border rounded-pill" id="postCount">Loading...</span>
+  </div>
+
+  <div class="row g-4" id="blogsContainer">
+    <!-- Spinner loader -->
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-muted mt-3">Fetching fresh articles...</p>
+    </div>
+  </div>
+</main>
+
+<!-- Edit Post Modal (Shared on feed page for super seamless updates) -->
+<div class="modal fade" id="feedEditModal" tabindex="-1" aria-labelledby="feedEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+      <div class="modal-header border-bottom-0 pb-0" style="padding: 2rem 2rem 0;">
+        <h4 class="modal-title fw-bold" id="feedEditModalLabel" style="font-family: 'Outfit', sans-serif;">
+          <i class="fas fa-edit me-2 text-primary"></i>Edit Post
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="feedEditForm">
+        <div class="modal-body" style="padding: 2rem;">
+          <input type="hidden" id="editBlogId">
+          <input type="hidden" id="existingImageUrl">
+          
+          <div class="mb-4">
+            <label for="editTitle" class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-lg border-2" id="editTitle" required placeholder="Give your story an inspiring title">
+          </div>
+          
+          <div class="mb-4">
+            <label for="editContent" class="form-label fw-bold">Content <span class="text-danger">*</span></label>
+            <textarea class="form-control border-2" id="editContent" rows="8" required placeholder="Write your hearts out..."></textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Cover Image (Optional)</label>
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <button type="button" class="btn btn-outline-secondary btn-sm position-relative overflow-hidden">
+                <i class="fas fa-image me-1"></i> Upload Image
+                <input type="file" id="editImageInput" accept="image/*" style="position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;">
+              </button>
+              <small class="text-muted">Max size: 5MB</small>
+            </div>
+            <img id="editImagePreview" class="img-fluid rounded mt-2 border" style="max-height: 200px; display: none; object-fit: cover; width: 100%;">
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0" style="padding: 0 2rem 2rem;">
+          <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-premium px-4" id="saveEditBtn">
+            <i class="fas fa-check-circle me-1"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
+<!-- Premium Footer -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+        <a class="footer-brand" href="#"><i class="fas fa-feather-alt me-2"></i>BlogSphere</a>
+        <p class="small mt-2 mb-0">Empowering voices around the globe. Share your story today.</p>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <div class="mb-3">
+          <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p class="small mb-0">&copy; 2026 BlogSphere. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Module script -->
 <script type="module" src="index.js"></script>
-
 </body>
 </html>
