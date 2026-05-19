@@ -10,7 +10,7 @@
   # This command takes the Environment Variables you define in your Netlify
   # dashboard and writes them into a .env file during the deploy process.
   # This enables the browser to fetch the keys at runtime securely!
-  command = "echo \"NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL\" > .env && echo \"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\" >> .env"
+  command = 'echo "{\"SUPABASE_URL\": \"$NEXT_PUBLIC_SUPABASE_URL\", \"SUPABASE_KEY\": \"$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\"}" > env.json'
 
 [dev]
   # Netlify Dev configuration (for running 'netlify dev' locally)
