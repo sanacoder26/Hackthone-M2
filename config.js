@@ -1,9 +1,9 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.28.0';
 
-// Default fallback credentials (from original config.js)
-let supabaseUrl = 'https://yuzxkvytvrddnmjmgruy.supabase.co';
-let supabaseKey = 'sb_publishable_JBsEL2knsHDwhNyYct_osA_WnrTSDrK';
+// Credentials will be loaded dynamically from the .env file or environment
+let supabaseUrl = '';
+let supabaseKey = '';
 
 // Dynamically fetch .env file if running on a local development server
 try {
